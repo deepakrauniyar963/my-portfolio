@@ -1,0 +1,186 @@
+\documentclass[9pt,a4paper]{article}
+
+% Packages
+\usepackage[left=1.2cm,right=1.2cm,top=1.2cm,bottom=1.2cm]{geometry}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage[hidelinks]{hyperref}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% Colors
+\definecolor{primaryColor}{RGB}{0,79,144}
+
+% Formatting
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlist[itemize]{noitemsep, topsep=2pt, leftmargin=12pt}
+
+\titleformat{\section}
+{\normalsize\bfseries\color{primaryColor}}
+{}{0pt}{}
+[\titlerule]
+
+\begin{document}
+
+%====================
+% HEADER
+%====================
+
+\begin{center}
+{\Large \textbf{Deepak Rauniyar}}
+
+\vspace{3pt}
+
+{\footnotesize
+\faMapMarker* \ Lucknow, Uttar Pradesh, India \quad | \quad
+\faPhone* \ +91 9794322637 \quad | \quad
+\href{mailto:deepakrauniyar963@gmail.com}{deepakrauniyar.official963@gmail.com}
+}
+
+\vspace{3pt}
+
+{\footnotesize
+\href{https://www.linkedin.com/in/deepakrauniyar963}{LinkedIn}
+\quad | \quad
+\href{https://github.com/deepakrauniyar963}{GitHub}
+\quad | \quad
+\href{https://deepak-rauniyar-portfolio.vercel.app/}{Portfolio Website}
+}
+\end{center}
+
+%====================
+% SUMMARY
+%====================
+
+\section{Professional Summary}
+
+MCA student at Integral University, Lucknow with a strong foundation in Full-Stack MERN Development, IoT Systems, and AI-powered applications. Experienced in developing responsive web applications, REST APIs, authentication systems, and hardware-integrated solutions using React.js, Node.js, MongoDB, Python, OpenCV, and Arduino. Passionate about software development, problem-solving, and building technology-driven solutions for real-world challenges.
+
+%====================
+% EDUCATION
+%====================
+
+\section{Education}
+
+\begin{tabularx}{\linewidth}{X r}
+
+\textbf{Master of Computer Applications (MCA)} -- Integral University, Lucknow (NAAC A+) &
+2024 -- 2026 \\
+
+CGPA: 8.5 &
+\\[4pt]
+
+\textbf{Bachelor of Computer Applications (BCA)} -- Integral University, Lucknow (NAAC A+) &
+2021 -- 2024 \\
+
+CGPA: 8.5 &
+\\
+
+\end{tabularx}
+
+%====================
+% SKILLS
+%====================
+
+\section{Technical Skills}
+
+\textbf{Programming Languages:}
+Java, Python, JavaScript, C/C++
+
+\vspace{2pt}
+
+\textbf{Frontend:}
+React.js, HTML5, CSS3, Tailwind CSS
+
+\vspace{2pt}
+
+\textbf{Backend:}
+Node.js, Express.js, REST APIs, JWT Authentication
+
+\vspace{2pt}
+
+\textbf{Databases:}
+MongoDB, SQLite
+
+\vspace{2pt}
+
+\textbf{Tools \& Technologies:}
+Git, GitHub, VS Code, Postman, Vercel, Arduino IDE, OpenCV
+
+\vspace{2pt}
+
+\textbf{Core Subjects:}
+Data Structures \& Algorithms, DBMS, Operating Systems, Computer Networks, OOP
+
+%====================
+% PROJECTS
+%====================
+
+\section{Projects}
+
+\textbf{Dual-Factor Biometric Attendance Management System using Facial Recognition and Fingerprint }
+
+\begin{itemize}
+\item Developed the 'SmartEntry 2FA' device, a dual-biometric attendance system combining facial recognition and fingerprint authentication.
+\item Integrated a laptop interface for OpenCV-based face recognition alongside an R307 fingerprint sensor and Arduino.
+\item Implemented SMS notifications via SIM800A GSM module and automated email alerts using the SMTP protocol.
+\item Designed reliable data storage using SQLite database.
+\end{itemize}
+
+\textbf{Tech Stack:} Python, OpenCV, Arduino, SQLite, SIM800A
+
+\vspace{4pt}
+
+\textbf{MERN Task Manager}
+
+\begin{itemize}
+\item Built a full-stack task management platform using the MERN stack.
+\item Implemented JWT authentication and role-based access control.
+\item Developed task tracking, priority management, and deadline reminder features.
+\item Designed responsive user interfaces and RESTful APIs.
+\end{itemize}
+
+\textbf{Tech Stack:} MongoDB, Express.js, React.js, Node.js, JWT
+
+\vspace{4pt}
+
+\textbf{Portfolio Website}
+
+\begin{itemize}
+\item Designed and deployed a personal portfolio website showcasing projects, technical skills, and achievements.
+\item Built responsive UI using React.js and Tailwind CSS with modern design principles.
+\item Integrated contact functionality and optimized performance for fast loading.
+\item Successfully deployed using Vercel.
+\end{itemize}
+
+\textbf{Tech Stack:} React.js, Tailwind CSS, JavaScript, Vercel
+
+%====================
+% CERTIFICATIONS
+%====================
+
+\section{Certifications}
+
+\begin{itemize}
+\item Sigma 9.0 (DSA with Java) -- Apna College
+\item Sigma 9.0 Full Stack Web Development (MERN Stack) -- Apna College
+\end{itemize}
+
+%====================
+% ACHIEVEMENTS
+%====================
+
+\section{Achievements}
+
+\begin{itemize}
+\item Maintained CGPA 8.5 in both BCA and MCA.
+\item Developed multiple Full-Stack MERN and IoT-based projects.
+\item Built AI-integrated solutions using OpenCV, biometric authentication, and GSM communication.
+\item Strong foundation in Data Structures, DBMS, Operating Systems, and Computer Networks.
+\end{itemize}
+
+\end{document}
