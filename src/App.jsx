@@ -1071,7 +1071,7 @@ function App() {
                 border: "hover:border-emerald-500/40",
               },
               {
-                value: "8.4",
+                value: "8.45",
                 label: "MCA CGPA",
                 color: "text-yellow-400",
                 border: "hover:border-yellow-500/40",
