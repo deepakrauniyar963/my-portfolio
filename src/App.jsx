@@ -25,16 +25,16 @@ import {
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
 const skills = [
+  { name: "Java", icon: "☕", color: "red", level: 78 },
+  { name: "PHP", icon: "🐘", color: "indigo", level: 82 },
   { name: "React", icon: "⚛️", color: "cyan", level: 85 },
-  { name: "Node.js", icon: "🟢", color: "green", level: 80 },
-  { name: "MongoDB", icon: "🍃", color: "emerald", level: 75 },
-  { name: "Express", icon: "🚂", color: "gray", level: 78 },
-  { name: "Python", icon: "🐍", color: "yellow", level: 82 },
+  { name: "Node.js", icon: "🟢", color: "green", level: 78 },
+  { name: "MySQL", icon: "🐬", color: "sky", level: 80 },
+  { name: "MongoDB", icon: "🍃", color: "emerald", level: 72 },
+  { name: "Python", icon: "🐍", color: "yellow", level: 78 },
   { name: "OpenCV", icon: "👁️", color: "blue", level: 70 },
   { name: "Arduino", icon: "🔌", color: "teal", level: 75 },
   { name: "C / C++", icon: "⚙️", color: "orange", level: 72 },
-  { name: "Java", icon: "☕", color: "red", level: 65 },
-  { name: "SQLite", icon: "🗄️", color: "indigo", level: 70 },
   { name: "Git", icon: "🔀", color: "rose", level: 88 },
   { name: "Tailwind", icon: "🎨", color: "sky", level: 83 },
 ];
@@ -107,30 +107,14 @@ const projects = [
     tagColor: "text-cyan-400",
     title: "SmartEntry 2FA",
     description:
-      "An Enterprise-Grade Dual Biometric Attendance device. Uses a laptop interface for Real-time Facial Recognition (OpenCV) communicating with hardware-level Fingerprint scanning (Arduino R307). Features SMS/Email alerts via SIM800A and SQLite WAL-mode.",
-    tech: ["Python", "OpenCV", "Arduino C++", "SQLite"],
+      "An enterprise-grade dual biometric attendance device. Uses a laptop interface for real-time facial recognition (OpenCV) communicating with hardware-level fingerprint scanning (Arduino R307). Features SMS/email alerts via SIM800A and SQLite storage with a full audit trail.",
+    tech: ["Python", "OpenCV", "Arduino C++", "SQLite", "SIM800A GSM"],
     mockupBg: "from-cyan-950 to-gray-900",
     mockupAccent: "bg-cyan-500",
     mockupLines: ["cyan-400", "cyan-600", "gray-700"],
     accentColor: "cyan",
     borderHover: "hover:border-cyan-500/30",
-    githubUrl: "https://github.com/deepakrauniyar963",
-    demoUrl: null,
-  },
-  {
-    id: 3,
-    tag: "IoT & AUTOMATION",
-    tagColor: "text-blue-400",
-    title: "GSM Alert System",
-    description:
-      "A real-time IoT alert system using Arduino and SIM800A GSM module that sends automated SMS notifications on sensor triggers. Integrates temperature, motion, and door sensors with a lightweight web dashboard.",
-    tech: ["Arduino C++", "SIM800A", "Serial Comm", "HTML/JS"],
-    mockupBg: "from-blue-950 to-gray-900",
-    mockupAccent: "bg-blue-500",
-    mockupLines: ["blue-400", "blue-600", "gray-700"],
-    accentColor: "blue",
-    borderHover: "hover:border-blue-500/30",
-    githubUrl: "https://github.com/deepakrauniyar963",
+    githubUrl: "https://github.com/deepakrauniyar963/SmartEntry-2FA",
     demoUrl: null,
   },
 ];
@@ -141,7 +125,7 @@ const achievements = [
     color: "text-yellow-400",
     bg: "bg-yellow-500/10 border-yellow-500/20",
     title: "MCA CGPA: 8.45",
-    desc: "Completed Master of Computer Applications with 8.4 CGPA — consistent academic excellence across both BCA (8.5) and MCA.",
+    desc: "Completed Master of Computer Applications with 8.45 CGPA — consistent academic excellence across both BCA (8.5) and MCA.",
     year: "2026",
   },
   {
@@ -166,7 +150,7 @@ const achievements = [
     bg: "bg-sky-500/10 border-sky-500/20",
     title: "Google Cloud Computing Foundations Certificate",
     desc: "Earned certification from Google Cloud covering core cloud computing concepts, infrastructure, and cloud-native application development.",
-    year: "2025",
+    year: "2024",
   },
   {
     icon: <BookOpen size={22} />,
@@ -361,10 +345,10 @@ function ProjectMockup({ project }) {
 
 // ─── TYPEWRITER ───────────────────────────────────────────────────────────────
 const roles = [
-  "Full-Stack MERN Developer",
+  "Full Stack Developer",
+  "Software Engineer",
   "IoT & Hardware Enthusiast",
   "AI & Computer Vision Builder",
-  "Arduino & Embedded Systems",
 ];
 
 function TypeWriter() {
@@ -930,7 +914,7 @@ function App() {
               >
                 I'm a{" "}
                 <span className="text-white font-medium">
-                  Full-Stack MERN Developer
+                  Full Stack Developer
                 </span>{" "}
                 from Lucknow who loves building things that work — both on the
                 screen and in the real world. During my MCA at Integral
@@ -943,9 +927,9 @@ function App() {
                 <span className="text-emerald-400 font-medium">
                   hardware & AI
                 </span>{" "}
-                — from laptop-interfaced biometric devices to IoT alert
-                networks. I'm currently looking for exciting opportunities to
-                build, learn, and grow as an engineer.
+                — from laptop-interfaced biometric devices to secure, deployed
+                web platforms. I'm currently looking for exciting opportunities
+                to build, learn, and grow as an engineer.
               </motion.p>
 
               <motion.div
@@ -1059,8 +1043,8 @@ function App() {
           >
             {[
               {
-                value: "3+",
-                label: "Projects Built",
+                value: "2+",
+                label: "Projects Deployed",
                 color: "text-cyan-400",
                 border: "hover:border-cyan-500/40",
               },
@@ -1114,8 +1098,8 @@ function App() {
                 Icon: Code,
                 color: "text-cyan-400",
                 border: "hover:border-cyan-500/50",
-                title: "Full-Stack Web",
-                desc: "C, Java, Python, MongoDB, Express.js, React, Node.js (MERN).",
+                title: "Full Stack Web",
+                desc: "Java, PHP, JavaScript, MySQL, React, Node.js — building secure, deployed web apps.",
               },
               {
                 Icon: Cpu,
