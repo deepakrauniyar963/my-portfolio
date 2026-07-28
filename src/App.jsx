@@ -272,10 +272,10 @@ function ProjectMockup({ project }) {
 
   return (
     <div
-      className={`w-full h-56 rounded-xl overflow-hidden relative bg-gradient-to-br ${project.mockupBg} border border-[var(--border-strong)]/60 group-hover:border-opacity-60 transition-all duration-500`}
+      className={`w-full h-56 rounded-xl overflow-hidden relative bg-gradient-to-br ${project.mockupBg} border border-[var(--border-strong)] group-hover:border-opacity-60 transition-all duration-500`}
     >
       {/* fake browser chrome */}
-      <div className="flex items-center gap-1.5 px-3 py-2 bg-black/30 border-b border-[var(--border-strong)]/40">
+      <div className="flex items-center gap-1.5 px-3 py-2 bg-black/30 border-b border-[var(--border-strong)]">
         <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
         <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
         <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
@@ -299,7 +299,7 @@ function ProjectMockup({ project }) {
           </div>
         </div>
         {/* hero block */}
-        <div className="rounded-lg p-2 bg-black/20 border border-[var(--border-strong)]/30">
+        <div className="rounded-lg p-2 bg-black/20 border border-[var(--border-strong)]">
           <div
             className="h-2 w-24 rounded-sm mb-1.5"
             style={{ background: c.bar, opacity: 0.6 }}
@@ -319,7 +319,7 @@ function ProjectMockup({ project }) {
           {[0.9, 0.6, 0.75].map((op, i) => (
             <div
               key={i}
-              className="rounded-md p-1.5 bg-black/20 border border-[var(--border-strong)]/30"
+              className="rounded-md p-1.5 bg-black/20 border border-[var(--border-strong)]"
             >
               <div
                 className="h-1.5 w-full rounded-sm mb-1"
@@ -864,7 +864,7 @@ function App() {
 
         {/* ── NAVBAR ── */}
         <nav
-          className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-[var(--bg-app)]/90 backdrop-blur-xl border-b border-[var(--border-color)]/60 shadow-lg shadow-black/20" : "bg-transparent"}`}
+          className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-[var(--bg-app)] backdrop-blur-xl border-b border-[var(--border-color)] shadow-lg shadow-black/20" : "bg-transparent"}`}
         >
           <div className="flex justify-between items-center px-6 md:px-8 py-4 max-w-[1400px] mx-auto">
             <motion.h1
@@ -875,37 +875,37 @@ function App() {
               Deepak<span className="text-cyan-400">.dev</span>
             </motion.h1>
 
-            {/* Desktop nav with active indicator */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="hidden md:flex gap-7 text-sm font-medium"
-            >
-              {navLinks.map((link) => {
-                const isActive = activeSection === link.toLowerCase();
-                return (
-                  <a
-                    key={link}
-                    href={`#${link.toLowerCase()}`}
-                    className={`relative py-1 transition-colors duration-200 group ${isActive ? "text-cyan-400" : "text-[var(--text-secondary)] hover:text-cyan-400"}`}
-                  >
-                    {link}
-                    <span
-                      className={`absolute bottom-0 left-0 h-px bg-cyan-400 transition-all duration-300 ${isActive ? "w-full" : "w-0 group-hover:w-full"}`}
-                    />
-                  </a>
-                );
-              })}
-            </motion.div>
+            {/* Desktop nav + theme toggle grouped together so they hug the right edge as one unit */}
+            <div className="hidden md:flex items-center gap-7">
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="flex gap-7 text-sm font-medium"
+              >
+                {navLinks.map((link) => {
+                  const isActive = activeSection === link.toLowerCase();
+                  return (
+                    <a
+                      key={link}
+                      href={`#${link.toLowerCase()}`}
+                      className={`relative py-1 transition-colors duration-200 group ${isActive ? "text-cyan-400" : "text-[var(--text-secondary)] hover:text-cyan-400"}`}
+                    >
+                      {link}
+                      <span
+                        className={`absolute bottom-0 left-0 h-px bg-cyan-400 transition-all duration-300 ${isActive ? "w-full" : "w-0 group-hover:w-full"}`}
+                      />
+                    </a>
+                  );
+                })}
+              </motion.div>
 
-            {/* Desktop theme toggle */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="hidden md:block"
-            >
-              <ThemeToggle theme={theme} onToggle={toggleTheme} />
-            </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+              >
+                <ThemeToggle theme={theme} onToggle={toggleTheme} />
+              </motion.div>
+            </div>
 
             {/* Mobile: theme toggle + hamburger */}
             <div className="flex md:hidden items-center gap-2">
@@ -949,7 +949,7 @@ function App() {
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.25, ease: "easeInOut" }}
-                className="md:hidden overflow-hidden bg-[var(--bg-panel)]/95 backdrop-blur-xl border-b border-[var(--border-color)]/60"
+                className="md:hidden overflow-hidden bg-[var(--bg-panel)] backdrop-blur-xl border-b border-[var(--border-color)]"
               >
                 <div className="flex flex-col px-6 py-4 gap-1">
                   {navLinks.map((link, i) => {
@@ -962,7 +962,7 @@ function App() {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: i * 0.05 }}
-                        className={`py-3 px-4 rounded-lg transition-all font-medium text-sm border ${isActive ? "text-cyan-400 bg-cyan-500/10 border-cyan-500/20" : "text-[var(--text-secondary)] hover:text-cyan-400 hover:bg-[var(--bg-surface)] border-transparent hover:border-[var(--border-strong)]/50"}`}
+                        className={`py-3 px-4 rounded-lg transition-all font-medium text-sm border ${isActive ? "text-cyan-400 bg-cyan-500/10 border-cyan-500/20" : "text-[var(--text-secondary)] hover:text-cyan-400 hover:bg-[var(--bg-surface)] border-transparent hover:border-[var(--border-strong)]"}`}
                       >
                         {link}
                       </motion.a>
@@ -994,7 +994,7 @@ function App() {
                 transition={{ delay: 0.1 }}
                 className="flex flex-wrap items-center gap-3 mb-6"
               >
-                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-surface)] border border-[var(--border-strong)]/80 text-cyan-400 text-sm">
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-surface)] border border-[var(--border-strong)] text-cyan-400 text-sm">
                   <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
                   MCA Graduate 2026 · Integral University
                 </span>
@@ -1002,7 +1002,7 @@ function App() {
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                   Open to Work
                 </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--bg-surface)] border border-[var(--border-strong)]/50 text-[var(--text-secondary)] text-xs">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--bg-surface)] border border-[var(--border-strong)] text-[var(--text-secondary)] text-xs">
                   📍 Lucknow, India · Remote OK
                 </span>
               </motion.div>
@@ -1349,7 +1349,7 @@ function App() {
                       {p.tech.map((t) => (
                         <span
                           key={t}
-                          className="px-3 py-1 bg-[var(--bg-surface)] text-[var(--text-secondary)] text-xs rounded-md border border-[var(--border-strong)]/60"
+                          className="px-3 py-1 bg-[var(--bg-surface)] text-[var(--text-secondary)] text-xs rounded-md border border-[var(--border-strong)]"
                         >
                           {t}
                         </span>
