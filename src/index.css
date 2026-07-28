@@ -2,16 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Force dark theme — Tailwind base reset override ── */
-@layer base {
-  html {
-    color-scheme: dark;
-  }
+/* ── Theme palette — single source of truth for both light & dark ──
+   Read by the app root as CSS custom properties. React only toggles
+   the `data-theme` attribute on <html>; it does not redefine colors. */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg-app: #080810;
+  --bg-nav: #080810;
+  --bg-panel: #0d0d18;
+  --bg-card: rgba(17, 24, 39, 0.45);
+  --bg-card-strong: rgba(17, 24, 39, 0.65);
+  --bg-surface: rgba(31, 41, 55, 0.6);
+  --bg-surface-solid: #1f2937;
+  --hover-surface: rgba(55, 65, 81, 0.6);
+  --border-color: #1f2937;
+  --border-strong: #374151;
+  --text-primary: #ffffff;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  --scrollbar-track: #0d0d1a;
+  --scrollbar-thumb: #22d3ee44;
+  --scrollbar-thumb-hover: #22d3ee99;
+}
 
+[data-theme="light"] {
+  color-scheme: light;
+  --bg-app: #f8fafc;
+  --bg-nav: #ffffff;
+  --bg-panel: #ffffff;
+  --bg-card: rgba(255, 255, 255, 0.75);
+  --bg-card-strong: rgba(255, 255, 255, 0.95);
+  --bg-surface: rgba(226, 232, 240, 0.6);
+  --bg-surface-solid: #e2e8f0;
+  --hover-surface: rgba(203, 213, 225, 0.7);
+  --border-color: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --scrollbar-track: #e2e8f0;
+  --scrollbar-thumb: #0891b244;
+  --scrollbar-thumb-hover: #0891b299;
+}
+
+@layer base {
   body {
-    background-color: #080810;
-    color: #f1f5f9;
+    background-color: var(--bg-app);
+    color: var(--text-primary);
     scroll-behavior: smooth;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   * {
@@ -24,17 +63,17 @@
   scroll-margin-top: 80px;
 }
 
-/* ── Smooth scrolling & scrollbar styling ── */
+/* ── Smooth scrolling & scrollbar styling — theme aware ── */
 ::-webkit-scrollbar {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0d0d1a;
+  background: var(--scrollbar-track);
 }
 ::-webkit-scrollbar-thumb {
-  background: #22d3ee44;
+  background: var(--scrollbar-thumb);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #22d3ee99;
+  background: var(--scrollbar-thumb-hover);
 }

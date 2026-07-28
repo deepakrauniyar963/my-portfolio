@@ -155,6 +155,22 @@ const achievements = [
     year: "2024",
   },
   {
+    icon: <Code size={22} />,
+    color: "text-purple-400",
+    bg: "bg-purple-500/10 border-purple-500/20",
+    title: "Sigma 9.0 — Full Stack Web Development (MERN Stack)",
+    desc: "Completed Apna College's program covering React.js, Node.js, Express.js, MongoDB, REST APIs, and JWT authentication.",
+    year: "2026",
+  },
+  {
+    icon: <BookOpen size={22} />,
+    color: "text-orange-400",
+    bg: "bg-orange-500/10 border-orange-500/20",
+    title: "Sigma 9.0 — DSA with Java",
+    desc: "Completed Apna College's DSA program covering arrays, linked lists, trees, graphs, dynamic programming, and problem-solving techniques.",
+    year: "2025",
+  },
+  {
     icon: <BookOpen size={22} />,
     color: "text-blue-400",
     bg: "bg-blue-500/10 border-blue-500/20",
@@ -416,50 +432,6 @@ function TypeWriter() {
   );
 }
 
-// ─── THEME VARIABLES ──────────────────────────────────────────────────────────
-// Defines the color palette for both themes as CSS custom properties.
-// Tailwind arbitrary values like `bg-[var(--bg-app)]` pick these up directly,
-// so no tailwind.config.js changes are required.
-function ThemeStyles() {
-  return (
-    <style>{`
-      [data-theme="dark"] {
-        --bg-app: #080810;
-        --bg-nav: #080810;
-        --bg-panel: #0d0d18;
-        --bg-card: rgba(17, 24, 39, 0.45);
-        --bg-card-strong: rgba(17, 24, 39, 0.65);
-        --bg-surface: rgba(31, 41, 55, 0.6);
-        --bg-surface-solid: #1f2937;
-        --hover-surface: rgba(55, 65, 81, 0.6);
-        --border-color: #1f2937;
-        --border-strong: #374151;
-        --text-primary: #ffffff;
-        --text-secondary: #9ca3af;
-        --text-muted: #6b7280;
-      }
-      [data-theme="light"] {
-        --bg-app: #f8fafc;
-        --bg-nav: #ffffff;
-        --bg-panel: #ffffff;
-        --bg-card: rgba(255, 255, 255, 0.75);
-        --bg-card-strong: rgba(255, 255, 255, 0.95);
-        --bg-surface: rgba(226, 232, 240, 0.6);
-        --bg-surface-solid: #e2e8f0;
-        --hover-surface: rgba(203, 213, 225, 0.7);
-        --border-color: #e2e8f0;
-        --border-strong: #cbd5e1;
-        --text-primary: #0f172a;
-        --text-secondary: #475569;
-        --text-muted: #64748b;
-      }
-      [data-theme] {
-        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-      }
-    `}</style>
-  );
-}
-
 // ─── THEME TOGGLE BUTTON ──────────────────────────────────────────────────────
 function ThemeToggle({ theme, onToggle, className = "" }) {
   const isDark = theme === "dark";
@@ -668,6 +640,31 @@ function SkillBar({ name, icon, color, level }) {
   );
 }
 
+// ─── SCROLL PROGRESS BAR ──────────────────────────────────────────────────────
+function ScrollProgress() {
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    const onScroll = () => {
+      const el = document.documentElement;
+      const scrollTop = el.scrollTop || document.body.scrollTop;
+      const scrollHeight =
+        (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+      setProgress(scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return (
+    <div className="fixed top-0 left-0 right-0 h-[2px] z-[60] bg-transparent pointer-events-none">
+      <div
+        className="h-full bg-gradient-to-r from-cyan-500 to-blue-500"
+        style={{ width: `${progress}%`, transition: "width 0.1s ease-out" }}
+      />
+    </div>
+  );
+}
+
 // ─── BACK TO TOP ──────────────────────────────────────────────────────────────
 function BackToTop() {
   const [visible, setVisible] = useState(false);
@@ -697,6 +694,14 @@ function BackToTop() {
 
 // ─── RESUME MODAL ─────────────────────────────────────────────────────────────
 function ResumeModal({ onClose }) {
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [onClose]);
+
   return (
     <AnimatePresence>
       <motion.div
@@ -792,6 +797,9 @@ function App() {
 
   useEffect(() => {
     window.localStorage.setItem("theme", theme);
+    document.documentElement.setAttribute("data-theme", theme);
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", theme === "dark" ? "#080810" : "#f8fafc");
   }, [theme]);
 
   const toggleTheme = () =>
@@ -834,7 +842,6 @@ function App() {
 
   return (
     <div data-theme={theme}>
-      <ThemeStyles />
 
       {/* ── PAGE LOADER ── */}
       <AnimatePresence>
@@ -845,6 +852,7 @@ function App() {
       {showResume && <ResumeModal onClose={() => setShowResume(false)} />}
 
       <div className="min-h-screen bg-[var(--bg-app)] text-[var(--text-primary)] font-sans selection:bg-cyan-500 selection:text-white overflow-x-hidden">
+        <ScrollProgress />
         <ParticleCanvas />
         <BackToTop />
 
