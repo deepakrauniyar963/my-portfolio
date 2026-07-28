@@ -20,6 +20,8 @@ import {
   FileText,
   Cloud,
   ShieldCheck,
+  Sun,
+  Moon,
 } from "lucide-react";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
@@ -54,7 +56,7 @@ const levelColor = (n) =>
       ? "text-emerald-400 bg-emerald-500/10 border-emerald-500/30"
       : n >= 65
         ? "text-yellow-400 bg-yellow-500/10 border-yellow-500/30"
-        : "text-gray-400 bg-gray-500/10 border-gray-500/30";
+        : "text-[var(--text-secondary)] bg-gray-500/10 border-gray-500/30";
 const barColor = (n) =>
   n >= 85
     ? "from-cyan-500 to-blue-500"
@@ -254,14 +256,14 @@ function ProjectMockup({ project }) {
 
   return (
     <div
-      className={`w-full h-56 rounded-xl overflow-hidden relative bg-gradient-to-br ${project.mockupBg} border border-gray-700/60 group-hover:border-opacity-60 transition-all duration-500`}
+      className={`w-full h-56 rounded-xl overflow-hidden relative bg-gradient-to-br ${project.mockupBg} border border-[var(--border-strong)]/60 group-hover:border-opacity-60 transition-all duration-500`}
     >
       {/* fake browser chrome */}
-      <div className="flex items-center gap-1.5 px-3 py-2 bg-black/30 border-b border-gray-700/40">
+      <div className="flex items-center gap-1.5 px-3 py-2 bg-black/30 border-b border-[var(--border-strong)]/40">
         <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
         <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
         <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
-        <div className="flex-1 mx-2 h-4 bg-gray-800/60 rounded text-[8px] flex items-center px-2 text-gray-500 font-mono overflow-hidden">
+        <div className="flex-1 mx-2 h-4 bg-[var(--bg-surface)] rounded text-[8px] flex items-center px-2 text-[var(--text-muted)] font-mono overflow-hidden">
           deepak.dev / {project.title.toLowerCase().replace(/\s+/g, "-")}
         </div>
       </div>
@@ -281,7 +283,7 @@ function ProjectMockup({ project }) {
           </div>
         </div>
         {/* hero block */}
-        <div className="rounded-lg p-2 bg-black/20 border border-gray-700/30">
+        <div className="rounded-lg p-2 bg-black/20 border border-[var(--border-strong)]/30">
           <div
             className="h-2 w-24 rounded-sm mb-1.5"
             style={{ background: c.bar, opacity: 0.6 }}
@@ -301,7 +303,7 @@ function ProjectMockup({ project }) {
           {[0.9, 0.6, 0.75].map((op, i) => (
             <div
               key={i}
-              className="rounded-md p-1.5 bg-black/20 border border-gray-700/30"
+              className="rounded-md p-1.5 bg-black/20 border border-[var(--border-strong)]/30"
             >
               <div
                 className="h-1.5 w-full rounded-sm mb-1"
@@ -325,7 +327,7 @@ function ProjectMockup({ project }) {
                   }}
                 />
               </div>
-              <span className="text-[7px] text-gray-600">{w}%</span>
+              <span className="text-[7px] text-[var(--text-muted)]">{w}%</span>
             </div>
           ))}
         </div>
@@ -411,6 +413,88 @@ function TypeWriter() {
         }}
       />
     </span>
+  );
+}
+
+// ─── THEME VARIABLES ──────────────────────────────────────────────────────────
+// Defines the color palette for both themes as CSS custom properties.
+// Tailwind arbitrary values like `bg-[var(--bg-app)]` pick these up directly,
+// so no tailwind.config.js changes are required.
+function ThemeStyles() {
+  return (
+    <style>{`
+      [data-theme="dark"] {
+        --bg-app: #080810;
+        --bg-nav: #080810;
+        --bg-panel: #0d0d18;
+        --bg-card: rgba(17, 24, 39, 0.45);
+        --bg-card-strong: rgba(17, 24, 39, 0.65);
+        --bg-surface: rgba(31, 41, 55, 0.6);
+        --bg-surface-solid: #1f2937;
+        --hover-surface: rgba(55, 65, 81, 0.6);
+        --border-color: #1f2937;
+        --border-strong: #374151;
+        --text-primary: #ffffff;
+        --text-secondary: #9ca3af;
+        --text-muted: #6b7280;
+      }
+      [data-theme="light"] {
+        --bg-app: #f8fafc;
+        --bg-nav: #ffffff;
+        --bg-panel: #ffffff;
+        --bg-card: rgba(255, 255, 255, 0.75);
+        --bg-card-strong: rgba(255, 255, 255, 0.95);
+        --bg-surface: rgba(226, 232, 240, 0.6);
+        --bg-surface-solid: #e2e8f0;
+        --hover-surface: rgba(203, 213, 225, 0.7);
+        --border-color: #e2e8f0;
+        --border-strong: #cbd5e1;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --text-muted: #64748b;
+      }
+      [data-theme] {
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      }
+    `}</style>
+  );
+}
+
+// ─── THEME TOGGLE BUTTON ──────────────────────────────────────────────────────
+function ThemeToggle({ theme, onToggle, className = "" }) {
+  const isDark = theme === "dark";
+  return (
+    <button
+      onClick={onToggle}
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      className={`relative p-2 rounded-lg border border-[var(--border-strong)] bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:text-cyan-400 hover:border-cyan-500/40 transition-all ${className}`}
+    >
+      <AnimatePresence mode="wait" initial={false}>
+        {isDark ? (
+          <motion.span
+            key="sun"
+            initial={{ rotate: -90, opacity: 0 }}
+            animate={{ rotate: 0, opacity: 1 }}
+            exit={{ rotate: 90, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="block"
+          >
+            <Sun size={18} />
+          </motion.span>
+        ) : (
+          <motion.span
+            key="moon"
+            initial={{ rotate: 90, opacity: 0 }}
+            animate={{ rotate: 0, opacity: 1 }}
+            exit={{ rotate: -90, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="block"
+          >
+            <Moon size={18} />
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </button>
   );
 }
 
@@ -506,18 +590,18 @@ function PageLoader({ onDone }) {
     <motion.div
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
-      className="fixed inset-0 z-[100] bg-[#080810] flex flex-col items-center justify-center"
+      className="fixed inset-0 z-[100] bg-[var(--bg-app)] flex flex-col items-center justify-center"
     >
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="text-3xl font-bold tracking-tighter text-white mb-8"
+        className="text-3xl font-bold tracking-tighter text-[var(--text-primary)] mb-8"
       >
         Deepak<span className="text-cyan-400">.dev</span>
       </motion.div>
 
-      <div className="w-48 h-1 bg-gray-800 rounded-full overflow-hidden">
+      <div className="w-48 h-1 bg-[var(--bg-surface-solid)] rounded-full overflow-hidden">
         <motion.div
           className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-500"
           animate={{ width: `${progress}%` }}
@@ -528,7 +612,7 @@ function PageLoader({ onDone }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="text-gray-500 text-xs mt-3 font-mono"
+        className="text-[var(--text-muted)] text-xs mt-3 font-mono"
       >
         {progress}%
       </motion.p>
@@ -578,7 +662,7 @@ function SkillBar({ name, icon, color, level }) {
         />
       </div>
       <div className="text-right mt-1">
-        <span className="text-[10px] text-gray-500">{level}%</span>
+        <span className="text-[10px] text-[var(--text-muted)]">{level}%</span>
       </div>
     </div>
   );
@@ -627,14 +711,14 @@ function ResumeModal({ onClose }) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9 }}
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
-          className="bg-[#0d0d18] border border-gray-700 rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden shadow-2xl"
+          className="bg-[var(--bg-panel)] border border-[var(--border-strong)] rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
           {/* header */}
-          <div className="flex items-center justify-between px-5 py-4 border-b border-gray-800">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--border-color)]">
             <div className="flex items-center gap-3">
               <FileText size={18} className="text-cyan-400" />
-              <span className="text-white font-semibold text-sm">
+              <span className="text-[var(--text-primary)] font-semibold text-sm">
                 Deepak_Rauniyar_Resume.pdf
               </span>
             </div>
@@ -648,7 +732,7 @@ function ResumeModal({ onClose }) {
               </a>
               <button
                 onClick={onClose}
-                className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-all"
+                className="p-1.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--hover-surface)] transition-all"
               >
                 <X size={18} />
               </button>
@@ -657,7 +741,7 @@ function ResumeModal({ onClose }) {
 
           {/* PDF viewer — uses browser's built-in PDF renderer */}
           <div
-            className="bg-gray-900/50 p-4 text-center"
+            className="bg-[var(--bg-card)] p-4 text-center"
             style={{ height: "70vh" }}
           >
             <object
@@ -667,8 +751,8 @@ function ResumeModal({ onClose }) {
             >
               {/* Fallback if PDF can't render in browser */}
               <div className="flex flex-col items-center justify-center h-full gap-4">
-                <FileText size={48} className="text-gray-600" />
-                <p className="text-gray-400 text-sm">
+                <FileText size={48} className="text-[var(--text-muted)]" />
+                <p className="text-[var(--text-secondary)] text-sm">
                   Browser PDF preview not supported.
                 </p>
                 <a
@@ -695,6 +779,23 @@ function App() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("about");
   const [showResume, setShowResume] = useState(false);
+
+  // theme: read saved preference, fall back to system preference, default dark
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === "undefined") return "dark";
+    const saved = window.localStorage.getItem("theme");
+    if (saved === "light" || saved === "dark") return saved;
+    return window.matchMedia("(prefers-color-scheme: light)").matches
+      ? "light"
+      : "dark";
+  });
+
+  useEffect(() => {
+    window.localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () =>
+    setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   // scroll + active section tracker
   useEffect(() => {
@@ -732,7 +833,9 @@ function App() {
   };
 
   return (
-    <>
+    <div data-theme={theme}>
+      <ThemeStyles />
+
       {/* ── PAGE LOADER ── */}
       <AnimatePresence>
         {loading && <PageLoader onDone={() => setLoading(false)} />}
@@ -741,7 +844,7 @@ function App() {
       {/* ── RESUME MODAL ── */}
       {showResume && <ResumeModal onClose={() => setShowResume(false)} />}
 
-      <div className="min-h-screen bg-[#080810] text-gray-100 font-sans selection:bg-cyan-500 selection:text-white overflow-x-hidden">
+      <div className="min-h-screen bg-[var(--bg-app)] text-[var(--text-primary)] font-sans selection:bg-cyan-500 selection:text-white overflow-x-hidden">
         <ParticleCanvas />
         <BackToTop />
 
@@ -753,13 +856,13 @@ function App() {
 
         {/* ── NAVBAR ── */}
         <nav
-          className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-[#080810]/90 backdrop-blur-xl border-b border-gray-800/60 shadow-lg shadow-black/20" : "bg-transparent"}`}
+          className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-[var(--bg-app)]/90 backdrop-blur-xl border-b border-[var(--border-color)]/60 shadow-lg shadow-black/20" : "bg-transparent"}`}
         >
           <div className="flex justify-between items-center px-6 md:px-8 py-4 max-w-[1400px] mx-auto">
             <motion.h1
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="text-2xl font-bold tracking-tighter text-white z-10"
+              className="text-2xl font-bold tracking-tighter text-[var(--text-primary)] z-10"
             >
               Deepak<span className="text-cyan-400">.dev</span>
             </motion.h1>
@@ -776,7 +879,7 @@ function App() {
                   <a
                     key={link}
                     href={`#${link.toLowerCase()}`}
-                    className={`relative py-1 transition-colors duration-200 group ${isActive ? "text-cyan-400" : "text-gray-400 hover:text-cyan-400"}`}
+                    className={`relative py-1 transition-colors duration-200 group ${isActive ? "text-cyan-400" : "text-[var(--text-secondary)] hover:text-cyan-400"}`}
                   >
                     {link}
                     <span
@@ -787,9 +890,20 @@ function App() {
               })}
             </motion.div>
 
-            {/* Mobile hamburger */}
-            <button
-              className="md:hidden z-10 p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800/60 transition-all"
+            {/* Desktop theme toggle */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="hidden md:block"
+            >
+              <ThemeToggle theme={theme} onToggle={toggleTheme} />
+            </motion.div>
+
+            {/* Mobile: theme toggle + hamburger */}
+            <div className="flex md:hidden items-center gap-2">
+              <ThemeToggle theme={theme} onToggle={toggleTheme} />
+              <button
+              className="z-10 p-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)] transition-all"
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle menu"
             >
@@ -816,7 +930,8 @@ function App() {
                   </motion.div>
                 )}
               </AnimatePresence>
-            </button>
+              </button>
+            </div>
           </div>
 
           <AnimatePresence>
@@ -826,7 +941,7 @@ function App() {
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.25, ease: "easeInOut" }}
-                className="md:hidden overflow-hidden bg-[#0d0d18]/95 backdrop-blur-xl border-b border-gray-800/60"
+                className="md:hidden overflow-hidden bg-[var(--bg-panel)]/95 backdrop-blur-xl border-b border-[var(--border-color)]/60"
               >
                 <div className="flex flex-col px-6 py-4 gap-1">
                   {navLinks.map((link, i) => {
@@ -839,7 +954,7 @@ function App() {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: i * 0.05 }}
-                        className={`py-3 px-4 rounded-lg transition-all font-medium text-sm border ${isActive ? "text-cyan-400 bg-cyan-500/10 border-cyan-500/20" : "text-gray-300 hover:text-cyan-400 hover:bg-gray-800/40 border-transparent hover:border-gray-700/50"}`}
+                        className={`py-3 px-4 rounded-lg transition-all font-medium text-sm border ${isActive ? "text-cyan-400 bg-cyan-500/10 border-cyan-500/20" : "text-[var(--text-secondary)] hover:text-cyan-400 hover:bg-[var(--bg-surface)] border-transparent hover:border-[var(--border-strong)]/50"}`}
                       >
                         {link}
                       </motion.a>
@@ -871,7 +986,7 @@ function App() {
                 transition={{ delay: 0.1 }}
                 className="flex flex-wrap items-center gap-3 mb-6"
               >
-                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-800/60 border border-gray-700/80 text-cyan-400 text-sm">
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-surface)] border border-[var(--border-strong)]/80 text-cyan-400 text-sm">
                   <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
                   MCA Graduate 2026 · Integral University
                 </span>
@@ -879,7 +994,7 @@ function App() {
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                   Open to Work
                 </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-800/40 border border-gray-700/50 text-gray-400 text-xs">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--bg-surface)] border border-[var(--border-strong)]/50 text-[var(--text-secondary)] text-xs">
                   📍 Lucknow, India · Remote OK
                 </span>
               </motion.div>
@@ -888,7 +1003,7 @@ function App() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.6 }}
-                className="text-5xl md:text-7xl font-bold tracking-tight mb-4 text-white leading-tight"
+                className="text-5xl md:text-7xl font-bold tracking-tight mb-4 text-[var(--text-primary)] leading-tight"
               >
                 Hi, I'm{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
@@ -910,10 +1025,10 @@ function App() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.45, duration: 0.6 }}
-                className="text-lg text-gray-400 mb-10 max-w-2xl leading-relaxed text-justify"
+                className="text-lg text-[var(--text-secondary)] mb-10 max-w-2xl leading-relaxed text-justify"
               >
                 I'm a{" "}
-                <span className="text-white font-medium">
+                <span className="text-[var(--text-primary)] font-medium">
                   Full Stack Developer
                 </span>{" "}
                 from Lucknow who loves building things that work — both on the
@@ -947,14 +1062,14 @@ function App() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => setShowResume(true)}
-                    className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-cyan-500/50 text-white px-5 py-3 rounded-lg font-semibold transition-all hover:-translate-y-0.5"
+                    className="flex items-center gap-2 bg-[var(--bg-surface-solid)] hover:bg-[var(--border-strong)] border border-[var(--border-strong)] hover:border-cyan-500/50 text-[var(--text-primary)] px-5 py-3 rounded-lg font-semibold transition-all hover:-translate-y-0.5"
                   >
                     <FileText size={18} className="text-cyan-400" /> View Resume
                   </button>
                   <a
                     href="/Deepak_Rauniyar_Resume.pdf"
                     download
-                    className="flex items-center gap-2 bg-gray-800/60 hover:bg-gray-700 border border-gray-700 text-gray-300 hover:text-white px-4 py-3 rounded-lg transition-all hover:-translate-y-0.5 text-sm font-medium"
+                    className="flex items-center gap-2 bg-[var(--bg-surface)] hover:bg-[var(--hover-surface)] border border-[var(--border-strong)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] px-4 py-3 rounded-lg transition-all hover:-translate-y-0.5 text-sm font-medium"
                   >
                     <ChevronRight size={16} /> Download
                   </a>
@@ -965,13 +1080,13 @@ function App() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6 }}
-                className="flex gap-6 mt-10 text-gray-400"
+                className="flex gap-6 mt-10 text-[var(--text-secondary)]"
               >
                 <a
                   href="https://github.com/deepakrauniyar963"
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-white hover:-translate-y-1 transition-all"
+                  className="hover:text-[var(--text-primary)] hover:-translate-y-1 transition-all"
                 >
                   <GithubSVG />
                 </a>
@@ -1006,7 +1121,7 @@ function App() {
                 <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 to-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
 
                 {/* Profile Image Container */}
-                <div className="relative w-full h-full rounded-full border-2 border-gray-800 p-2 overflow-hidden bg-[#0d0d18] shadow-2xl hover:border-cyan-500/50 transition-all duration-500 group">
+                <div className="relative w-full h-full rounded-full border-2 border-[var(--border-color)] p-2 overflow-hidden bg-[var(--bg-panel)] shadow-2xl hover:border-cyan-500/50 transition-all duration-500 group">
                   <img
                     src="/profile.png"
                     alt="Deepak Rauniyar"
@@ -1019,7 +1134,7 @@ function App() {
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.7 }}
-                  className="absolute bottom-4 right-0 md:-right-4 bg-gray-900 border border-gray-700 px-4 py-2 rounded-2xl shadow-xl flex items-center gap-3 backdrop-blur-md"
+                  className="absolute bottom-4 right-0 md:-right-4 bg-gray-900 border border-[var(--border-strong)] px-4 py-2 rounded-2xl shadow-xl flex items-center gap-3 backdrop-blur-md"
                 >
                   <div className="relative flex h-3 w-3">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -1073,12 +1188,12 @@ function App() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className={`text-center p-5 rounded-2xl bg-gray-900/40 border border-gray-800 ${border} transition-all duration-300 hover:-translate-y-1`}
+                className={`text-center p-5 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] ${border} transition-all duration-300 hover:-translate-y-1`}
               >
                 <div className={`text-3xl md:text-4xl font-bold ${color} mb-1`}>
                   {value}
                 </div>
-                <div className="text-gray-500 text-xs font-medium uppercase tracking-wider">
+                <div className="text-[var(--text-muted)] text-xs font-medium uppercase tracking-wider">
                   {label}
                 </div>
               </motion.div>
@@ -1122,11 +1237,11 @@ function App() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className={`p-6 rounded-2xl bg-gray-900/50 border border-gray-800 ${border} transition-all duration-300 hover:-translate-y-1`}
+                className={`p-6 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] ${border} transition-all duration-300 hover:-translate-y-1`}
               >
                 <Icon className={`${color} mb-4`} size={32} />
-                <h3 className="text-xl font-bold mb-2 text-white">{title}</h3>
-                <p className="text-gray-400 text-sm">{desc}</p>
+                <h3 className="text-xl font-bold mb-2 text-[var(--text-primary)]">{title}</h3>
+                <p className="text-[var(--text-secondary)] text-sm">{desc}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -1138,12 +1253,12 @@ function App() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mt-32 pt-10 border-t border-gray-800"
+            className="mt-32 pt-10 border-t border-[var(--border-color)]"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
+            <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-2">
               Tech <span className="text-cyan-400">Stack</span>
             </h2>
-            <p className="text-gray-500 mb-4 text-sm">
+            <p className="text-[var(--text-muted)] mb-4 text-sm">
               Tools & technologies — with proficiency levels
             </p>
             <div className="flex flex-wrap gap-3 mb-8">
@@ -1191,9 +1306,9 @@ function App() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mt-32 pt-10 border-t border-gray-800"
+            className="mt-32 pt-10 border-t border-[var(--border-color)]"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-10">
               Featured <span className="text-cyan-400">Projects</span>
             </h2>
             <div className="grid grid-cols-1 gap-8">
@@ -1204,7 +1319,7 @@ function App() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1, duration: 0.5 }}
-                  className={`flex flex-col md:flex-row gap-8 bg-gray-900/40 border border-gray-800 rounded-2xl p-6 transition-all duration-300 group ${p.borderHover} hover:-translate-y-1 hover:shadow-xl hover:shadow-black/30`}
+                  className={`flex flex-col md:flex-row gap-8 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-6 transition-all duration-300 group ${p.borderHover} hover:-translate-y-1 hover:shadow-xl hover:shadow-black/30`}
                 >
                   {/* Project Mockup Thumbnail */}
                   <div className="w-full md:w-5/12">
@@ -1216,17 +1331,17 @@ function App() {
                     >
                       {p.tag}
                     </div>
-                    <h3 className="text-2xl font-bold text-white mb-3">
+                    <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-3">
                       {p.title}
                     </h3>
-                    <p className="text-gray-400 mb-5 leading-relaxed text-sm">
+                    <p className="text-[var(--text-secondary)] mb-5 leading-relaxed text-sm">
                       {p.description}
                     </p>
                     <div className="flex flex-wrap gap-2 mb-5">
                       {p.tech.map((t) => (
                         <span
                           key={t}
-                          className="px-3 py-1 bg-gray-800/80 text-gray-300 text-xs rounded-md border border-gray-700/60"
+                          className="px-3 py-1 bg-[var(--bg-surface)] text-[var(--text-secondary)] text-xs rounded-md border border-[var(--border-strong)]/60"
                         >
                           {t}
                         </span>
@@ -1238,7 +1353,7 @@ function App() {
                           href={p.githubUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors border border-gray-700 hover:border-gray-500 px-4 py-2 rounded-lg bg-gray-800/50 hover:bg-gray-700/50"
+                          className="flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors border border-[var(--border-strong)] hover:border-[var(--border-strong)] px-4 py-2 rounded-lg bg-[var(--bg-surface)] hover:bg-[var(--hover-surface)]"
                         >
                           <GithubSVG size={16} /> Source Code
                         </a>
@@ -1248,7 +1363,7 @@ function App() {
                           href={p.demoUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="flex items-center gap-2 text-sm text-white hover:text-cyan-400 transition-colors"
+                          className="flex items-center gap-2 text-sm text-[var(--text-primary)] hover:text-cyan-400 transition-colors"
                         >
                           <ExternalLink size={16} /> Live Demo
                         </a>
@@ -1267,12 +1382,12 @@ function App() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mt-32 pt-10 border-t border-gray-800"
+            className="mt-32 pt-10 border-t border-[var(--border-color)]"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
+            <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-3">
               Achievements & <span className="text-cyan-400">Highlights</span>
             </h2>
-            <p className="text-gray-500 mb-10 text-sm">
+            <p className="text-[var(--text-muted)] mb-10 text-sm">
               Milestones, certifications & notable work
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -1283,7 +1398,7 @@ function App() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className={`flex gap-4 p-5 rounded-2xl border bg-gray-900/40 hover:bg-gray-900/60 transition-all duration-300 hover:-translate-y-1 ${a.bg}`}
+                  className={`flex gap-4 p-5 rounded-2xl border bg-[var(--bg-card)] hover:bg-[var(--bg-card-strong)] transition-all duration-300 hover:-translate-y-1 ${a.bg}`}
                 >
                   <div
                     className={`flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center ${a.bg} ${a.color} border`}
@@ -1292,14 +1407,14 @@ function App() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2 mb-1">
-                      <h3 className="font-bold text-white text-sm leading-tight">
+                      <h3 className="font-bold text-[var(--text-primary)] text-sm leading-tight">
                         {a.title}
                       </h3>
-                      <span className="text-[10px] font-semibold text-gray-500 shrink-0 bg-gray-800 px-2 py-0.5 rounded-full">
+                      <span className="text-[10px] font-semibold text-[var(--text-muted)] shrink-0 bg-gray-800 px-2 py-0.5 rounded-full">
                         {a.year}
                       </span>
                     </div>
-                    <p className="text-gray-400 text-xs leading-relaxed">
+                    <p className="text-[var(--text-secondary)] text-xs leading-relaxed">
                       {a.desc}
                     </p>
                   </div>
@@ -1315,9 +1430,9 @@ function App() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mt-32 pt-10 border-t border-gray-800"
+            className="mt-32 pt-10 border-t border-[var(--border-color)]"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-10">
               Education & <span className="text-cyan-400">Background</span>
             </h2>
             <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-700 before:to-transparent">
@@ -1364,7 +1479,7 @@ function App() {
                   className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group"
                 >
                   <div
-                    className={`flex items-center justify-center w-10 h-10 rounded-full border ${edu.active ? "border-cyan-500 bg-gray-900 text-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.25)]" : "border-gray-600 bg-gray-900 text-gray-400"} shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10`}
+                    className={`flex items-center justify-center w-10 h-10 rounded-full border ${edu.active ? "border-cyan-500 bg-gray-900 text-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.25)]" : "border-gray-600 bg-gray-900 text-[var(--text-secondary)]"} shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10`}
                   >
                     {i < 2 ? (
                       <GraduationCap size={20} />
@@ -1373,21 +1488,21 @@ function App() {
                     )}
                   </div>
                   <div
-                    className={`w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] p-6 rounded-2xl bg-gray-900/40 border border-gray-800 transition-all ${edu.active ? "hover:border-cyan-500/50" : "hover:border-gray-600"}`}
+                    className={`w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] p-6 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] transition-all ${edu.active ? "hover:border-cyan-500/50" : "hover:border-gray-600"}`}
                   >
                     <div
-                      className={`flex items-center gap-2 text-sm font-bold mb-1 ${edu.active ? "text-cyan-400" : "text-gray-400"}`}
+                      className={`flex items-center gap-2 text-sm font-bold mb-1 ${edu.active ? "text-cyan-400" : "text-[var(--text-secondary)]"}`}
                     >
                       <Calendar size={14} /> {edu.year}
                     </div>
                     <h3
-                      className={`font-bold mb-1 ${edu.active ? "text-xl text-white" : "text-lg text-gray-200"}`}
+                      className={`font-bold mb-1 ${edu.active ? "text-xl text-[var(--text-primary)]" : "text-lg text-[var(--text-secondary)]"}`}
                     >
                       {edu.degree}
                     </h3>
-                    <p className="text-gray-400 text-sm mb-3">{edu.school}</p>
+                    <p className="text-[var(--text-secondary)] text-sm mb-3">{edu.school}</p>
                     {edu.noteType === "text" && (
-                      <p className="text-gray-500 text-sm">{edu.note}</p>
+                      <p className="text-[var(--text-muted)] text-sm">{edu.note}</p>
                     )}
                     {edu.noteType === "badge-emerald" && (
                       <span className="inline-block px-3 py-1 bg-emerald-500/10 text-emerald-400 text-xs font-semibold rounded-full border border-emerald-500/20">
@@ -1395,7 +1510,7 @@ function App() {
                       </span>
                     )}
                     {edu.noteType === "badge-gray" && (
-                      <span className="inline-block px-3 py-1 bg-gray-800 text-gray-300 text-xs font-semibold rounded-full border border-gray-700">
+                      <span className="inline-block px-3 py-1 bg-[var(--bg-surface-solid)] text-[var(--text-secondary)] text-xs font-semibold rounded-full border border-[var(--border-strong)]">
                         {edu.note}
                       </span>
                     )}
@@ -1412,16 +1527,16 @@ function App() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mt-32 pt-10 border-t border-gray-800"
+            className="mt-32 pt-10 border-t border-[var(--border-color)]"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-10">
               Get In <span className="text-cyan-400">Touch</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              <div className="bg-gray-900/40 p-8 rounded-2xl border border-gray-800 shadow-xl">
+              <div className="bg-[var(--bg-card)] p-8 rounded-2xl border border-[var(--border-color)] shadow-xl">
                 <form onSubmit={onSubmit} className="space-y-5">
                   <div>
-                    <label className="block text-gray-400 text-sm font-medium mb-2">
+                    <label className="block text-[var(--text-secondary)] text-sm font-medium mb-2">
                       Name
                     </label>
                     <input
@@ -1429,11 +1544,11 @@ function App() {
                       name="name"
                       required
                       placeholder="Your Name"
-                      className="w-full bg-gray-800/50 text-white rounded-lg p-3 border border-gray-700 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500/20 transition-all"
+                      className="w-full bg-[var(--bg-surface)] text-[var(--text-primary)] rounded-lg p-3 border border-[var(--border-strong)] focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500/20 transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-gray-400 text-sm font-medium mb-2">
+                    <label className="block text-[var(--text-secondary)] text-sm font-medium mb-2">
                       Email
                     </label>
                     <input
@@ -1441,11 +1556,11 @@ function App() {
                       name="email"
                       required
                       placeholder="your@email.com"
-                      className="w-full bg-gray-800/50 text-white rounded-lg p-3 border border-gray-700 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500/20 transition-all"
+                      className="w-full bg-[var(--bg-surface)] text-[var(--text-primary)] rounded-lg p-3 border border-[var(--border-strong)] focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500/20 transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-gray-400 text-sm font-medium mb-2">
+                    <label className="block text-[var(--text-secondary)] text-sm font-medium mb-2">
                       Message
                     </label>
                     <textarea
@@ -1453,7 +1568,7 @@ function App() {
                       required
                       rows="4"
                       placeholder="How can I help you?"
-                      className="w-full bg-gray-800/50 text-white rounded-lg p-3 border border-gray-700 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500/20 transition-all resize-none"
+                      className="w-full bg-[var(--bg-surface)] text-[var(--text-primary)] rounded-lg p-3 border border-[var(--border-strong)] focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500/20 transition-all resize-none"
                     />
                   </div>
                   <input
@@ -1472,7 +1587,7 @@ function App() {
                     disabled={result === "Sending...."}
                     className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-bold transition-all shadow-lg hover:-translate-y-0.5 ${
                       result === "Sending...."
-                        ? "bg-gray-600 text-gray-400 cursor-not-allowed"
+                        ? "bg-gray-600 text-[var(--text-secondary)] cursor-not-allowed"
                         : "bg-cyan-500 hover:bg-cyan-400 text-gray-900 shadow-cyan-500/20 hover:shadow-cyan-400/30"
                     }`}
                   >
@@ -1491,20 +1606,20 @@ function App() {
                 </form>
               </div>
               <div className="flex flex-col justify-center space-y-8">
-                <p className="text-gray-400 text-lg leading-relaxed">
+                <p className="text-[var(--text-secondary)] text-lg leading-relaxed">
                   Whether you have a question, a project idea, or just want to
                   say hi, I'll try my best to get back to you!
                 </p>
                 <div className="space-y-4">
                   <a
                     href="mailto:deepakrauniyar.official963@gmail.com"
-                    className="flex items-center gap-4 text-gray-300 hover:text-cyan-400 transition-colors p-4 rounded-xl bg-gray-800/20 border border-gray-800 hover:border-cyan-500/30 group"
+                    className="flex items-center gap-4 text-[var(--text-secondary)] hover:text-cyan-400 transition-colors p-4 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-cyan-500/30 group"
                   >
-                    <div className="p-3 bg-gray-800 rounded-lg text-cyan-400 group-hover:bg-cyan-500/10 transition-colors">
+                    <div className="p-3 bg-[var(--bg-surface-solid)] rounded-lg text-cyan-400 group-hover:bg-cyan-500/10 transition-colors">
                       <Mail size={20} />
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500 font-medium">
+                      <p className="text-xs text-[var(--text-muted)] font-medium">
                         Email Me At
                       </p>
                       <p className="font-semibold break-all text-sm">
@@ -1514,13 +1629,13 @@ function App() {
                   </a>
                   <a
                     href="tel:+919794322637"
-                    className="flex items-center gap-4 text-gray-300 hover:text-emerald-400 transition-colors p-4 rounded-xl bg-gray-800/20 border border-gray-800 hover:border-emerald-500/30 group"
+                    className="flex items-center gap-4 text-[var(--text-secondary)] hover:text-emerald-400 transition-colors p-4 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-emerald-500/30 group"
                   >
-                    <div className="p-3 bg-gray-800 rounded-lg text-emerald-400 group-hover:bg-emerald-500/10 transition-colors">
+                    <div className="p-3 bg-[var(--bg-surface-solid)] rounded-lg text-emerald-400 group-hover:bg-emerald-500/10 transition-colors">
                       <Phone size={20} />
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500 font-medium">
+                      <p className="text-xs text-[var(--text-muted)] font-medium">
                         Call Me At
                       </p>
                       <p className="font-semibold">+91 9794322637</p>
@@ -1532,7 +1647,7 @@ function App() {
                     {
                       href: "https://github.com/deepakrauniyar963",
                       svg: <GithubSVG />,
-                      hover: "hover:text-white",
+                      hover: "hover:text-[var(--text-primary)]",
                     },
                     {
                       href: "https://www.linkedin.com/in/deepakrauniyar963",
@@ -1550,7 +1665,7 @@ function App() {
                       href={href}
                       target="_blank"
                       rel="noreferrer"
-                      className={`p-4 bg-gray-800/50 border border-gray-700 rounded-xl text-gray-400 ${hover} hover:bg-gray-700 transition-all hover:-translate-y-1`}
+                      className={`p-4 bg-[var(--bg-surface)] border border-[var(--border-strong)] rounded-xl text-[var(--text-secondary)] ${hover} hover:bg-[var(--hover-surface)] transition-all hover:-translate-y-1`}
                     >
                       {svg}
                     </a>
@@ -1561,19 +1676,19 @@ function App() {
           </motion.div>
 
           {/* ── FOOTER ── */}
-          <footer className="mt-20 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+          <footer className="mt-20 pt-8 border-t border-[var(--border-color)] text-center text-[var(--text-muted)] text-sm">
             <p>
               © {new Date().getFullYear()}{" "}
-              <span className="text-gray-400 font-medium">Deepak Rauniyar</span>
+              <span className="text-[var(--text-secondary)] font-medium">Deepak Rauniyar</span>
               . Built with React & Tailwind CSS.
             </p>
-            <p className="mt-1 text-gray-600 text-xs">
+            <p className="mt-1 text-[var(--text-muted)] text-xs">
               Made with ❤️ in Lucknow
             </p>
           </footer>
         </main>
       </div>
-    </>
+    </div>
   );
 }
 
