@@ -37,6 +37,7 @@
 
     <!-- ── Open Graph (LinkedIn, Facebook, WhatsApp preview) ── -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Deepak Rauniyar Portfolio" />
     <meta property="og:url" content="https://deepak-rauniyar-portfolio.vercel.app/" />
     <meta
       property="og:title"
@@ -50,6 +51,8 @@
       property="og:image"
       content="https://deepak-rauniyar-portfolio.vercel.app/og-image.png"
     />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <!-- ── Twitter Card ── -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -66,12 +69,43 @@
       content="https://deepak-rauniyar-portfolio.vercel.app/og-image.png"
     />
 
+    <!-- ── Canonical URL — prevents duplicate-content SEO issues ── -->
+    <link rel="canonical" href="https://deepak-rauniyar-portfolio.vercel.app/" />
+
     <!-- ── Favicon ── -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <!-- ── Theme color (browser UI) — updated dynamically by the app on toggle ── -->
     <meta name="theme-color" content="#080810" />
+
+    <!-- ── Preload LCP image (profile photo) for faster paint ── -->
+    <link rel="preload" as="image" href="/profile.png" />
+
+    <!-- ── Structured Data (JSON-LD) — powers rich results in Google Search ── -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Deepak Rauniyar",
+        "url": "https://deepak-rauniyar-portfolio.vercel.app/",
+        "image": "https://deepak-rauniyar-portfolio.vercel.app/profile.png",
+        "jobTitle": "Full Stack Developer",
+        "description": "Full Stack Developer, IoT & Hardware Enthusiast, and AI/Computer Vision Builder from Lucknow, India.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Lucknow",
+          "addressRegion": "Uttar Pradesh",
+          "addressCountry": "IN"
+        },
+        "sameAs": [
+          "https://github.com/deepakrauniyar963",
+          "https://www.linkedin.com/in/deepakrauniyar963",
+          "https://www.instagram.com/rauniyar.js/"
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
