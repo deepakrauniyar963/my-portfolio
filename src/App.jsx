@@ -94,13 +94,20 @@ const projects = [
     title: "Smart Photo Gallery Management System",
     description:
       "A production-deployed media management platform with dual authentication (Bcrypt + Google OAuth 2.0 SSO), a 3-tier admin dashboard, and an automated PHPMailer-based password recovery system. Solved real-world deployment challenges including Gmail spam-filter bypass, server timezone desync, and HTTPS/OAuth redirect compliance.",
-    tech: ["PHP 8", "MySQL (PDO)", "Bootstrap 5", "Google OAuth 2.0", "PHPMailer"],
+    tech: [
+      "PHP 8",
+      "MySQL (PDO)",
+      "Bootstrap 5",
+      "Google OAuth 2.0",
+      "PHPMailer",
+    ],
     mockupBg: "from-emerald-950 to-gray-900",
     mockupAccent: "bg-emerald-500",
     mockupLines: ["emerald-400", "emerald-600", "gray-700"],
     accentColor: "emerald",
     borderHover: "hover:border-emerald-500/30",
-    githubUrl: "https://github.com/deepakrauniyar963/smart-gallery-management-system",
+    githubUrl:
+      "https://github.com/deepakrauniyar963/smart-gallery-management-system",
     demoUrl: "https://smartgallery.rf.gd",
   },
   {
@@ -116,7 +123,7 @@ const projects = [
     mockupLines: ["cyan-400", "cyan-600", "gray-700"],
     accentColor: "cyan",
     borderHover: "hover:border-cyan-500/30",
-    githubUrl: "https://github.com/deepakrauniyar963/SmartEntry-2FA",
+    githubUrl: "https://github.com/deepakrauniyar963/SmartEntry2FA",
     demoUrl: null,
   },
 ];
@@ -799,11 +806,11 @@ function App() {
     window.localStorage.setItem("theme", theme);
     document.documentElement.setAttribute("data-theme", theme);
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute("content", theme === "dark" ? "#080810" : "#f8fafc");
+    if (meta)
+      meta.setAttribute("content", theme === "dark" ? "#080810" : "#f8fafc");
   }, [theme]);
 
-  const toggleTheme = () =>
-    setTheme((t) => (t === "dark" ? "light" : "dark"));
+  const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   // scroll + active section tracker
   useEffect(() => {
@@ -842,7 +849,6 @@ function App() {
 
   return (
     <div data-theme={theme}>
-
       {/* ── PAGE LOADER ── */}
       <AnimatePresence>
         {loading && <PageLoader onDone={() => setLoading(false)} />}
@@ -911,33 +917,33 @@ function App() {
             <div className="flex md:hidden items-center gap-2">
               <ThemeToggle theme={theme} onToggle={toggleTheme} />
               <button
-              className="z-10 p-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)] transition-all"
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Toggle menu"
-            >
-              <AnimatePresence mode="wait">
-                {menuOpen ? (
-                  <motion.div
-                    key="close"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.15 }}
-                  >
-                    <X size={22} />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="open"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.15 }}
-                  >
-                    <Menu size={22} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                className="z-10 p-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)] transition-all"
+                onClick={() => setMenuOpen(!menuOpen)}
+                aria-label="Toggle menu"
+              >
+                <AnimatePresence mode="wait">
+                  {menuOpen ? (
+                    <motion.div
+                      key="close"
+                      initial={{ rotate: -90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: 90, opacity: 0 }}
+                      transition={{ duration: 0.15 }}
+                    >
+                      <X size={22} />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="open"
+                      initial={{ rotate: 90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: -90, opacity: 0 }}
+                      transition={{ duration: 0.15 }}
+                    >
+                      <Menu size={22} />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </button>
             </div>
           </div>
@@ -1248,7 +1254,9 @@ function App() {
                 className={`p-6 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] ${border} transition-all duration-300 hover:-translate-y-1`}
               >
                 <Icon className={`${color} mb-4`} size={32} />
-                <h3 className="text-xl font-bold mb-2 text-[var(--text-primary)]">{title}</h3>
+                <h3 className="text-xl font-bold mb-2 text-[var(--text-primary)]">
+                  {title}
+                </h3>
                 <p className="text-[var(--text-secondary)] text-sm">{desc}</p>
               </motion.div>
             ))}
@@ -1508,9 +1516,13 @@ function App() {
                     >
                       {edu.degree}
                     </h3>
-                    <p className="text-[var(--text-secondary)] text-sm mb-3">{edu.school}</p>
+                    <p className="text-[var(--text-secondary)] text-sm mb-3">
+                      {edu.school}
+                    </p>
                     {edu.noteType === "text" && (
-                      <p className="text-[var(--text-muted)] text-sm">{edu.note}</p>
+                      <p className="text-[var(--text-muted)] text-sm">
+                        {edu.note}
+                      </p>
                     )}
                     {edu.noteType === "badge-emerald" && (
                       <span className="inline-block px-3 py-1 bg-emerald-500/10 text-emerald-400 text-xs font-semibold rounded-full border border-emerald-500/20">
@@ -1687,7 +1699,9 @@ function App() {
           <footer className="mt-20 pt-8 border-t border-[var(--border-color)] text-center text-[var(--text-muted)] text-sm">
             <p>
               © {new Date().getFullYear()}{" "}
-              <span className="text-[var(--text-secondary)] font-medium">Deepak Rauniyar</span>
+              <span className="text-[var(--text-secondary)] font-medium">
+                Deepak Rauniyar
+              </span>
               . Built with React & Tailwind CSS.
             </p>
             <p className="mt-1 text-[var(--text-muted)] text-xs">
